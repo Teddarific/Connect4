@@ -9,8 +9,10 @@
     <body>
         
             <div ng-app='boardApp'  ng-controller='boardCtrl as board'>
-                {{board.name }}
+                <div>"Board data: " + {{board.tableData[0][0]}}</div>
+                <div ng-click='board.test()'>Click me!</div>
             </div>
+            
     </body>
 
 
