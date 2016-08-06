@@ -1,0 +1,7 @@
+<table>
+    <tr ng-repeat="rows in board.tableData | orderBy:'-' track by $index">
+        <td ng-repeat="val in rows track by $index">
+            {{val}}
+        </td>
+    </tr>
+</table>

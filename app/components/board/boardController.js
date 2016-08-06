@@ -1,18 +1,28 @@
 function boardCtrl(){
-    this.colData = [[],[],[],[],[],[],[],[]];
+    this.colData = [[1],[1],[2],[],[],[],[],[]];
+    this.name = "Testing123";
+    //Function to convert raw data into data to be displayed in table
     var getTableFormattedData = function(colData){
-       var returnArr = [[],[],[],[],[],[],[],[]];
+       var formattedColArr = [[],[],[],[],[],[],[],[]];
        for(var i=0; i < 8; i++){
         for(var j=0; j < 8; j ++){
             if(!colData[i][j]){
-                returnArr[i].push('');
+                formattedColArr[i].push('E');
             }
             else{
-                returnArr[i].push(colData[i][j]);
+                formattedColArr[i].push(colData[i][j]);
             }
         }     
        }
-       return returnArr;
+
+       //Convert columns into rows to be displayed
+       var formattedRowArr = [[],[],[],[],[],[],[],[]];
+        for(var i = 0; i < 8; i ++){
+            for(var j = 0; j < 8; j++){
+                formattedRowArr[i].push(formattedColArr[j][i]);
+            }
+        }
+        return formattedRowArr;
     };
     this.tableData = getTableFormattedData(this.colData);
 
