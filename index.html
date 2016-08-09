@@ -5,17 +5,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
         <script src="app/components/board/boardController.js"></script>
         <script src="app/components/board/boardDirective.js"></script>
-
+        <script src="app/components/board/boardFactory.js"></script>
         <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     </head>
 
     <body>
-        
+
             <div ng-app='boardApp'  ng-controller='boardCtrl as board'>
                 <board-directive></board-directive>
                 <div ng-click='board.test()'>Click me!</div>
             </div>
-            
+
     </body>
 
 
