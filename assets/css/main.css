@@ -5,6 +5,8 @@ body {
 
 table, th, td {
     border: 1px solid black;
+    margin-left: 7.75rem;
+    margin-top: 5rem;
 }
 
 td {
