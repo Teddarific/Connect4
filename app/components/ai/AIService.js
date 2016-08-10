@@ -5,10 +5,26 @@ var AIService = function(){
   function chain(x,y){
     this.x1 = x;
     this.y1 = y;
+    this.x2 = undefined;
+    this.y2 = undefined;
+    this.pts = [[x,y]];
     this.length = 1;
     this.bounds = 0;
     this.dir = undefined;
   }
+
+  chain.prototype.checkPt = function(x,y){
+    for(var i = 0; i < this.pts.length; i ++){
+      if(this.pts[i][0] == x && this.pts[i][1] == y){
+        return true;
+      }
+    }
+    return false;
+  }
+  chain.prototype.checkDir = function(x,y){
+
+  }
+
 //End of class 'chain'
 
   AI.pChains = [];
@@ -28,7 +44,7 @@ var AIService = function(){
     return (aiVal - playerVal);
   }
 
-  AI.pushChains = function(x,y){
+  AI.pushChains = function(x,y,p){
 
 
   }
