@@ -1,4 +1,4 @@
-var boardService = function($q){
+var boardService = function(AIService){
     var service = {};
     service.colData = [[],[],[],[],[],[],[],[]];
 
@@ -32,8 +32,9 @@ var boardService = function($q){
         return finalArr;
     };
     service.AIMove = function(){
-      var rand = Math.floor(Math.random() * 8);
-      this.colData[rand].push(1);
+      //var rand = Math.floor(Math.random() * 8);
+      var col = AIService.getMove();
+      this.colData[col].push(1);
       playerTurn = true;
     };
 
@@ -41,6 +42,7 @@ var boardService = function($q){
       if(this.playerTurn){
         this.colData[col].push(0);
         this.tableData = this.getTableFormattedData();
+        AIService.pushChains(col,(this.colData[col].length - 1));
         this.AIMove();
       }
     }
