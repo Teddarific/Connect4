@@ -4,6 +4,7 @@ function boardCtrl(boardService){
         boardService.playerMove(col);
         this.tableData = boardService.getTableFormattedData();
     }
+    this.hoveredCol = -1;
 }
 
 angular
