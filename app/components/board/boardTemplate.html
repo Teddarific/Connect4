@@ -1,7 +1,7 @@
 <!--<div>{{board.tableData}}</div>-->
 <table>
     <tr ng-repeat="rows in board.tableData track by $index">
-        <td ng-repeat="val in rows track by $index" ng-click="board.playerMove($index)" ng-mouseover="board.hoveredCol = $index" ng-mouseleave="board.hoveredCol = -1" class="$index == board.hoveredCol ? 'activeCol' : 'inactiveCol'">
+        <td ng-repeat="val in rows track by $index" ng-click="board.playerMove($index)" ng-mouseover="board.hoveredCol = $index" ng-mouseleave="board.hoveredCol = -1" ng-class="$index == board.hoveredCol ? 'activeCol' : 'inactiveCol'">
             {{val}} + {{$index}} + {{$parent.$index}}
             <img src='assets/img/bluepiece.jpg' class='bluepieceimg' ng-show='val==0'>
             <img src='assets/img/redpiece.jpg' class='redpieceimg' ng-show='val==1'>
