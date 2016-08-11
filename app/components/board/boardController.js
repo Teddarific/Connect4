@@ -7,5 +7,5 @@ function boardCtrl(boardService){
 }
 
 angular
-    .module('boardApp',[])
+    .module('boardApp')
     .controller('boardCtrl',boardCtrl);
