@@ -1,6 +1,6 @@
 var boardService = function(AIService){
     var service = {};
-    service.colData = [[],[],[],[],[],[],[],[]];
+    service.colData = AIService.colData;
 
     service.playerTurn = true;
 
@@ -42,7 +42,7 @@ var boardService = function(AIService){
       if(this.playerTurn){
         this.colData[col].push(0);
         this.tableData = this.getTableFormattedData();
-        AIService.pushChains(col,(this.colData[col].length - 1));
+        AIService.playerMove(col,this.colData[col].length,this.tableData);
         this.AIMove();
       }
     }
