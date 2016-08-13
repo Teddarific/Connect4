@@ -12,7 +12,17 @@ td {
     height: 50px;
 }
 
+.activeCol {
+    background-color: lightblue;
+}
+
+.ghostpieceimg {
+    opacity: 0.2;
+    width: 35px;
+    height: 35px;
+}
+
 .bluepieceimg,.redpieceimg {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
 }
