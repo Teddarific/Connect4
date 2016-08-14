@@ -1,9 +1,14 @@
-function boardCtrl(boardService){
-    this.tableData = boardService.getTableFormattedData();
-    this.colData = boardService.colData;
+function boardCtrl(AIService){
+    this.tableData = AIService.tableData;
+    this.colData = AIService.colData;
+    this.playerTurn = true;
     this.playerMove = function(col){
-        boardService.playerMove(col);
-        this.tableData = boardService.getTableFormattedData();
+      if(this.playerTurn){
+        this.playerTurn = false;
+        this.playerTurn = AIService.playerMove(col,this.colData[col].length);
+        this.tableData = AIService.tableData;
+        this.colData = AIService.colData;       
+      }
     }
     this.hoveredCol = -1;
     this.isGhostPos = function(rowIndex,colIndex){

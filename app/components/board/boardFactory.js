@@ -1,11 +1,12 @@
 var boardService = function(AIService){
+    //Designed to communicate with AI service
     var service = {};
     service.colData = AIService.colData;
-
+    service.tableData = AIService.getTableFormattedData();
     service.playerTurn = true;
 
     //Function to convert raw data into data to be displayed in table
-    service.getTableFormattedData = function(){
+    /**service.getTableFormattedData = function(){
        var formattedColArr = [[],[],[],[],[],[],[],[]];
        for(var i=0; i < 8; i++){
         for(var j=0; j < 8; j ++){
@@ -30,20 +31,18 @@ var boardService = function(AIService){
             finalArr[i] = formattedRowArr[8-i-1];
         }
         return finalArr;
-    };
+    };*/
     service.AIMove = function(){
       //var rand = Math.floor(Math.random() * 8);
-      var col = AIService.getMove();
-      this.colData[col].push(1);
+      var col = AIService.getAIMove();
       playerTurn = true;
     };
 
     service.playerMove = function(col){
       if(this.playerTurn){
-        this.colData[col].push(0);
-        this.tableData = this.getTableFormattedData();
-        AIService.playerMove(col,this.colData[col].length,this.tableData);
-        this.AIMove();
+        AIService.playerMove(col,this.colData[col].length);
+        this.colData =
+        AIService.AIMove();
       }
     }
     return service;
