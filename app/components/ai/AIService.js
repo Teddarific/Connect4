@@ -186,10 +186,10 @@ AI.AIMove = function(){
         var chain1 = checkDir(dirs[i]);
         var chain2 = checkDir(complementDirs[i]);
         if(chain1 == 1 && chain2 && chain2 != 1){ //check to see if boundary needs to be updated
-          chain2.boundary = chain2.boundary + 1;
+          chain2.bounds = chain2.bounds + 1;
         }
         else if(chain2 == 1 && chain1 && chain1 != 1){
-          chain1.boundary = chain1.boundary + 1;
+          chain1.bounds = chain1.bounds + 1;
         }
         else if(chain1 && chain2){
           that.mergeChains(chain1,chain2,x,y);
@@ -273,9 +273,13 @@ AI.AIMove = function(){
   }
 
   AI.updateBoundaries = function(nx,ny,dir,chains){ //Update the number of boundaries of chain at nx,ny in dir
-    var targetChain = this.findChain(nx,ny,dir,chains);
-    if(targetChain){
-      targetChain.boundary = targetChain.boundary + 1;
+    for(var i = 0; i < 8; i ++){
+      if(dirs[i] != dir && dirs[i] != getComplementDir(dir)){
+        var targetChain = this.findChain(nx,ny,dir,chains);
+        if(targetChain){
+          targetChain.bounds = targetChain.bounds + 1;
+        }
+      }
     }
   }
 
