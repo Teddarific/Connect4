@@ -163,9 +163,9 @@ AI.AIMove = function(){
               return that.attachToChain(x,y,nx,ny,dir,chains);
             }
             else{ //Second one either empty or hostile, either way create new chain
-              var boundaries = 1;
+              var boundaries = 0;
               if(nnx == -1){ //Check to see boundary value
-                boundaries = 0;
+                boundaries = 1;
               }
               var newChain = new Chain(x,y,nx,ny,boundaries,dir);
               if(addNewChain){
@@ -175,10 +175,10 @@ AI.AIMove = function(){
             }
 
         }
-        else{ //If first one is hostile, update the hostile piece's boundaries
-          that.updateBoundaries(nx,ny,dir,otherChains);
-          return 1; //Need to let know if other side has chain, boundary + 1
-        }
+        //else{ //If first one is hostile, update the hostile piece's boundaries
+        //  that.updateBoundaries(nx,ny,dir,otherChains);
+        //  return 1; //Need to let know if other side has chain, boundary + 1
+        //}
           return false;
       }
       //Check each direction and its complementary direction
@@ -221,12 +221,12 @@ AI.AIMove = function(){
           var cEndY = ny;
           for(var j = 0; j < chain.length - 1; j ++){
             if(endX != undefined && endY != undefined && dir(endX,endY) != undefined){
-              endX = dir(endX)[0];
               endY = dir(endX,endY)[1];
+              endX = dir(endX)[0];
             }
             if(cEndX != undefined && cEndY != undefined && cDir(cEndX,cEndY) != undefined){
-              cEndX = cDir(cEndX)[0];
               cEndY = cDir(cEndX,cEndY)[1];
+              cEndX = cDir(cEndX)[0];
             }
           }
           if((endX == chain.x2 && endY == chain.y2) || (cEndX == chain.x2 && cEndY == chain.y2)){
@@ -240,12 +240,12 @@ AI.AIMove = function(){
           var cEndY = ny;
           for(var j = 0; j < chain.length - 1; j ++){
             if(endX != undefined && endY != undefined && dir(endX,endY) != undefined){
-              endX = dir(endX)[0];
               endY = dir(endX,endY)[1];
+              endX = dir(endX)[0];
             }
-            if(cEndX != undefined && cEndY != undefined && dir(endX,endY) != undefined){
-              cEndX = cDir(cEndX)[0];
+            if(cEndX != undefined && cEndY != undefined && cDir(cEndX,cEndY) != undefined){
               cEndY = cDir(cEndX,cEndY)[1];
+              cEndX = cDir(cEndX)[0];
             }
           }
           if((endX == chain.x1 && endY == chain.y1) || (cEndX == chain.x1 && cEndY == chain.y1)){
@@ -274,8 +274,8 @@ AI.AIMove = function(){
 
   AI.updateBoundaries = function(nx,ny,dir,chains){ //Update the number of boundaries of chain at nx,ny in dir
     for(var i = 0; i < 8; i ++){
-      if(dirs[i] != dir && dirs[i] != getComplementDir(dir)){
-        var targetChain = this.findChain(nx,ny,dir,chains);
+      if(allDirs[i] != dir && allDirs[i] != getComplementDir(dir)){
+        var targetChain = this.findChain(nx,ny,allDirs[i],chains);
         if(targetChain){
           targetChain.bounds = targetChain.bounds + 1;
         }
