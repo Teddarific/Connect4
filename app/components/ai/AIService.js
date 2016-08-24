@@ -129,7 +129,9 @@ AI.AIMove = function(){
   var move = Math.floor(Math.random() * 7);
   this.colData[move].push(1);
   this.tableData = this.getTableFormattedData();
-  this.updateChains(move,this.colData[move].length,this.aChains,this.pChains, 1, this.colData);
+  this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
+  console.log(this.pChains);
+  console.log(this.aChains);
   console.log(this.getBoardValue());
   return true;
 }
@@ -138,7 +140,6 @@ AI.AIMove = function(){
     this.colData[x].push(0);
     this.tableData = this.getTableFormattedData();
     this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
-    console.log(this.pChains);
     return this.AIMove();
   }
 
@@ -308,6 +309,18 @@ AI.AIMove = function(){
     chain1.bounds = chain1.bounds + chain2.bounds;
   }
 
+  AI.calculateMove = function(){
+    var that = this;
+     for(var i = 0; i < 8; i ++){
+       //save the current state
+       var tPChains = JSON.parse(JSON.stringify(that.pChains)); //make copies, not pass reference
+       var tAChains = JSON.parse(JSON.stringify(that.aChains));
+       var tColData = JSON.parse(JSON.stringify(that.colData));
+
+
+
+     }
+  };
 
   return AI;
 }
