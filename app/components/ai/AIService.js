@@ -126,10 +126,12 @@ AI.tableData = AI.getTableFormattedData();
   }
 //End of board grading stuff
 AI.AIMove = function(){
-  var move = Math.floor(Math.random() * 7);
+  var move = this.calculateMove();
   this.colData[move].push(1);
   this.tableData = this.getTableFormattedData();
-  this.updateChains(move,this.colData[move].length,this.aChains,this.pChains, 1, this.colData);
+  this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
+  console.log(this.pChains);
+  console.log(this.aChains);
   console.log(this.getBoardValue());
   return true;
 }
@@ -138,7 +140,6 @@ AI.AIMove = function(){
     this.colData[x].push(0);
     this.tableData = this.getTableFormattedData();
     this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
-    console.log(this.pChains);
     return this.AIMove();
   }
 
@@ -308,6 +309,49 @@ AI.AIMove = function(){
     chain1.bounds = chain1.bounds + chain2.bounds;
   }
 
+  AI.calculateMove = function(){
+    var that = this;
+    var scores = [];
+    //save the current state
+    var t1PChains = JSON.parse(JSON.stringify(that.pChains)); //make copies, not pass reference
+    var t1AChains = JSON.parse(JSON.stringify(that.aChains));
+    var t1ColData = JSON.parse(JSON.stringify(that.colData));
+     for(var i = 0; i < 8; i ++){ //possible CPU moves
+
+
+       that.colData[i].push(1);
+       that.updateChains(i,that.colData[i].length-1,that.aChains,that.pChains, 1, that.colData);
+       //save the current state
+       var t2PChains = JSON.parse(JSON.stringify(that.pChains));
+       var t2AChains = JSON.parse(JSON.stringify(that.aChains));
+       var t2ColData = JSON.parse(JSON.stringify(that.colData));
+            for(var j = 0 ; j < 8; j ++){
+                that.colData[j].push(0);
+                that.updateChains(j,that.colData[j].length-1,that.pChains,that.aChains, 0, that.colData)
+                var data = {
+                            score: that.getBoardValue(),
+                            AIMove: i,
+                            PMove: j
+                          };
+                scores.push(data);
+                that.pChains = JSON.parse(JSON.stringify(t2PChains));
+                that.aChains = JSON.parse(JSON.stringify(t2AChains));
+                that.colData = JSON.parse(JSON.stringify(t2ColData));
+            }
+        that.pChains = JSON.parse(JSON.stringify(t1PChains));
+        that.aChains = JSON.parse(JSON.stringify(t1AChains));
+        that.colData = JSON.parse(JSON.stringify(t1ColData));
+     }
+
+     //Search for highest score
+     var move = scores[0];
+     for(var i = 0; i < scores.length; i ++){
+        if(scores[i].score > move.score){
+          move = scores[i];
+        }
+     }
+     return move.AIMove;
+  };
 
   return AI;
 }
