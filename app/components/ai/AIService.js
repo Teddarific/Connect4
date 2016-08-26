@@ -325,6 +325,7 @@ AI.AIMove = function(){
        var t2PChains = JSON.parse(JSON.stringify(that.pChains));
        var t2AChains = JSON.parse(JSON.stringify(that.aChains));
        var t2ColData = JSON.parse(JSON.stringify(that.colData));
+       var playerScores = [];
             for(var j = 0 ; j < 8; j ++){
                 that.colData[j].push(0);
                 that.updateChains(j,that.colData[j].length-1,that.pChains,that.aChains, 0, that.colData)
@@ -333,16 +334,26 @@ AI.AIMove = function(){
                             AIMove: i,
                             PMove: j
                           };
-                scores.push(data);
+                playerScores.push(data);
                 that.pChains = JSON.parse(JSON.stringify(t2PChains));
                 that.aChains = JSON.parse(JSON.stringify(t2AChains));
                 that.colData = JSON.parse(JSON.stringify(t2ColData));
             }
+
+            //Search for lowest score i.e. move player will most likely make in case of this move
+            var move = playerScores[0];
+            for(var k = 0; k < playerScores.length; k ++){
+               if(playerScores[k].score < move.score){
+                 move = playerScores[k];
+               }
+            }
+        //console.log(move);
+        scores.push(move);
         that.pChains = JSON.parse(JSON.stringify(t1PChains));
         that.aChains = JSON.parse(JSON.stringify(t1AChains));
         that.colData = JSON.parse(JSON.stringify(t1ColData));
      }
-
+     //console.log(scores);
      //Search for highest score
      var move = scores[0];
      for(var i = 0; i < scores.length; i ++){
