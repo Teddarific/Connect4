@@ -7,7 +7,7 @@ function boardCtrl(AIService){
         this.playerTurn = false;
         this.playerTurn = AIService.playerMove(col,this.colData[col].length);
         this.tableData = AIService.tableData;
-        this.colData = AIService.colData;       
+        this.colData = AIService.colData;
       }
     }
     this.hoveredCol = -1;
@@ -17,6 +17,12 @@ function boardCtrl(AIService){
          }
          return false;
     }
+
+    this.newGame = function(){
+      AIService.resetGame();
+      this.tableData = AIService.tableData;
+      this.colData = AIService.colData;
+    };
 }
 
 angular

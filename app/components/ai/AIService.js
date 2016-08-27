@@ -364,6 +364,14 @@ AI.AIMove = function(){
      return move.AIMove;
   };
 
+  AI.resetGame = function(){
+    this.playerTurn = true;
+    this.pChains = [];
+    this.aChains = [];
+    this.colData = [[],[],[],[],[],[],[],[]];
+    this.tableData = this.getTableFormattedData();
+  };
+
   return AI;
 }
 
