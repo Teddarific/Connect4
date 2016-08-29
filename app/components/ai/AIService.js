@@ -67,10 +67,12 @@ var AIService = function(){
     this.bounds = boundaries;
   }
 //End of class 'chain'
-  AI.playerMove = true;
+  //AI.playerMove = true;
   AI.pChains = [];
   AI.aChains = [];
   AI.colData = [[],[],[],[],[],[],[],[]];
+  AI.gameOver = true;
+  AI.difficulty = 0;
 //Handle all the board data and formatting
 AI.getTableFormattedData = function(){
   var formattedColArr = [[],[],[],[],[],[],[],[]];
@@ -125,11 +127,22 @@ AI.tableData = AI.getTableFormattedData();
     return (aiVal - playerVal);
   }
 //End of board grading stuff
+
+
 AI.AIMove = function(){
-  var move = this.calculateMove();
+  var move = this.calculateMove(this.difficulty)
+      if(!move){
+        return;
+      }
+  move = move.AIMove;
   this.colData[move].push(1);
   this.tableData = this.getTableFormattedData();
   this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
+    if(this.getBoardValue() == 1000){
+      this.gameOver = true;
+      return;
+    }
+
   console.log(this.pChains);
   console.log(this.aChains);
   console.log(this.getBoardValue());
@@ -137,10 +150,19 @@ AI.AIMove = function(){
 }
 //Event handler communication with factory
   AI.playerMove = function(x,y){
-    this.colData[x].push(0);
-    this.tableData = this.getTableFormattedData();
-    this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
-    return this.AIMove();
+    if(this.colData[x].length < 8){
+      this.colData[x].push(0);
+      this.tableData = this.getTableFormattedData();
+      this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
+        if(this.getBoardValue() == -1000){
+          this.gameOver = true;
+          return;
+        }
+      return this.AIMove();
+    }
+    else{
+      return true;
+    }
   }
 
 
@@ -309,7 +331,8 @@ AI.AIMove = function(){
     chain1.bounds = chain1.bounds + chain2.bounds;
   }
 
-  AI.calculateMove = function(){
+  AI.calculateMove = function(n){
+    n = n || 0;
     var that = this;
     var scores = [];
     //save the current state
@@ -317,16 +340,17 @@ AI.AIMove = function(){
     var t1AChains = JSON.parse(JSON.stringify(that.aChains));
     var t1ColData = JSON.parse(JSON.stringify(that.colData));
      for(var i = 0; i < 8; i ++){ //possible CPU moves
+       if(that.colData[i].length < 8){
 
-
-       that.colData[i].push(1);
-       that.updateChains(i,that.colData[i].length-1,that.aChains,that.pChains, 1, that.colData);
-       //save the current state
-       var t2PChains = JSON.parse(JSON.stringify(that.pChains));
-       var t2AChains = JSON.parse(JSON.stringify(that.aChains));
-       var t2ColData = JSON.parse(JSON.stringify(that.colData));
-       var playerScores = [];
+         that.colData[i].push(1);
+         that.updateChains(i,that.colData[i].length-1,that.aChains,that.pChains, 1, that.colData);
+         //save the current state
+         var t2PChains = JSON.parse(JSON.stringify(that.pChains));
+         var t2AChains = JSON.parse(JSON.stringify(that.aChains));
+         var t2ColData = JSON.parse(JSON.stringify(that.colData));
+         var playerScores = [];
             for(var j = 0 ; j < 8; j ++){
+              if(that.colData[j].length < 8){
                 that.colData[j].push(0);
                 that.updateChains(j,that.colData[j].length-1,that.pChains,that.aChains, 0, that.colData)
                 var data = {
@@ -338,6 +362,7 @@ AI.AIMove = function(){
                 that.pChains = JSON.parse(JSON.stringify(t2PChains));
                 that.aChains = JSON.parse(JSON.stringify(t2AChains));
                 that.colData = JSON.parse(JSON.stringify(t2ColData));
+              }
             }
 
             //Search for lowest score i.e. move player will most likely make in case of this move
@@ -347,21 +372,56 @@ AI.AIMove = function(){
                  move = playerScores[k];
                }
             }
+
+            //Think n-moves ahead
+            if(n > 0){
+              that.colData[move.PMove].push(0);
+              that.updateChains(move.PMove,that.colData[move.PMove].length-1,that.pChains,that.aChains, 0, that.colData)
+              var recurMove = AI.calculateMove(n-1);
+              move.score = move.score + recurMove.score;
+            }
         //console.log(move);
         scores.push(move);
         that.pChains = JSON.parse(JSON.stringify(t1PChains));
         that.aChains = JSON.parse(JSON.stringify(t1AChains));
         that.colData = JSON.parse(JSON.stringify(t1ColData));
+      }
      }
      //console.log(scores);
      //Search for highest score
      var move = scores[0];
      for(var i = 0; i < scores.length; i ++){
-        if(scores[i].score > move.score){
+        if(scores[i] && scores[i].score > move.score){
           move = scores[i];
         }
      }
-     return move.AIMove;
+     return move;
+  };
+
+  AI.resetGame = function(){
+    this.gameOver = false;
+    this.pChains = [];
+    this.aChains = [];
+    this.colData = [[],[],[],[],[],[],[],[]];
+    this.tableData = this.getTableFormattedData();
+
+    var firstTurn = Math.floor(Math.random() * 2);
+    if(firstTurn == 0){
+      this.playerTurn = true;
+      return true;
+    }
+    else{
+      this.playerTurn = false;
+      var move = this.calculateMove(this.difficulty)
+          if(!move){
+            return;
+          }
+      move = move.AIMove;
+      this.colData[move].push(1);
+      this.tableData = this.getTableFormattedData();
+      this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
+      return true;
+    }
   };
 
   return AI;

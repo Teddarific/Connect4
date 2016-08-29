@@ -16,7 +16,17 @@
 
             <div ng-app='boardApp'  ng-controller='boardCtrl as board'>
                 <board-directive></board-directive>
+                <input type='button' ng-click='board.newGame()' value='New Game'></input>
+                <input type='button' ng-click='board.diff(0)' value='Beginner'></input>
+                <input type='button' ng-click='board.diff(1)' value='Easy'></input>
+                <input type='button' ng-click='board.diff(2)' value='Medium'></input>
+                <input type='button' ng-click='board.diff(3)' value='Hard'></input>
+
+                <div ng-show='board.gameOver'>Game over!</div>
+                <div ng-show='board.playerTurn'>It's your turn!<div>
+                <div ng-show='!board.playerTurn'>Thinking...</div>
             </div>
+
 
     </body>
 
