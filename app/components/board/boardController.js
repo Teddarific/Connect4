@@ -2,6 +2,7 @@ function boardCtrl(AIService){
     this.tableData = AIService.tableData;
     this.colData = AIService.colData;
     this.playerTurn = true;
+    this.difficulty = AIService.difficulty;
     this.gameOver = AIService.gameOver;
     this.playerMove = function(col){
       if(this.playerTurn && !this.gameOver){
@@ -29,7 +30,11 @@ function boardCtrl(AIService){
 
     this.diff = function(d){
       AIService.difficulty = d;
+      this.difficulty = AIService.difficulty;
+
     };
+
+    this.newGame();
 }
 
 angular
