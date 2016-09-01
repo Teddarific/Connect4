@@ -14,6 +14,20 @@ td {
     height: 50px;
 }
 
+#newGameBut {
+  border: 2px solid purple;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+
+#newGameBut:hover{
+  background-color: purple;
+  color: white;
+}
+
 .activeCol {
     background-color: lightblue;
 }
@@ -28,3 +42,69 @@ td {
     width: 35px;
     height: 35px;
 }
+
+.inactiveDiff {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    text-align: center;
+    transition-duration: 0.4s;
+}
+.inactiveDiff:hover {
+    color: white;
+    transition-duration: 0.4s;
+}
+
+.activeDiff {
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+
+
+
+.butt0{
+  border: 2px solid green;
+}
+.butt0.activeDiff{
+  background-color: green;
+}
+.butt0.inactiveDiff:hover{
+  background-color: green;
+}
+.butt1{
+  border: 2px solid blue;
+}
+.butt1.activeDiff{
+  background-color: blue;
+}
+.butt1.inactiveDiff:hover{
+  background-color: blue;
+}
+.butt2{
+  border: 2px solid red;
+}
+.butt2.activeDiff{
+  background-color: red;
+}
+.butt2.inactiveDiff:hover{
+  background-color: red;
+}
+.butt3{
+  border: 2px solid black;
+}
+.butt3.activeDiff{
+  background-color: black;
+}
+.butt3.inactiveDiff:hover{
+  background-color: black;
+}
+
+/*
+.activeDiff:hover{
+  color: black;
+  background-color: white;
+  transition-duration: 0.4s;
+}
+*/
