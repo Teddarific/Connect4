@@ -1,4 +1,4 @@
-var AIService = function(){
+var AIService = function($q){
   var AI = {};
 //Define direction functions
   var d0 = function(x,y){
@@ -130,6 +130,7 @@ AI.tableData = AI.getTableFormattedData();
 
 
 AI.AIMove = function(){
+  var deferred = $q.defer();
   var move = this.calculateMove(this.difficulty)
       if(!move){
         return;
@@ -140,13 +141,14 @@ AI.AIMove = function(){
   this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
     if(this.getBoardValue() == 1000){
       this.gameOver = true;
+      deferred.reject("Game Over");
       return;
     }
-
+  deferred.resolve();
   console.log(this.pChains);
   console.log(this.aChains);
   console.log(this.getBoardValue());
-  return true;
+  return deferred.promise;
 }
 //Event handler communication with factory
   AI.playerMove = function(x,y){
@@ -156,9 +158,9 @@ AI.AIMove = function(){
       this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
         if(this.getBoardValue() == -1000){
           this.gameOver = true;
-          return;
+          return ;
         }
-      return this.AIMove();
+      return this.AIMove();;
     }
     else{
       return true;
