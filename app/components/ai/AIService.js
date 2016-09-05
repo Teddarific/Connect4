@@ -1,4 +1,4 @@
-var AIService = function($q){
+var AIService = function($q,$timeout){
   var AI = {};
 //Define direction functions
   var d0 = function(x,y){
@@ -71,7 +71,7 @@ var AIService = function($q){
   AI.pChains = [];
   AI.aChains = [];
   AI.colData = [[],[],[],[],[],[],[],[]];
-  AI.gameOver = true;
+  AI.gameOver = 1;
   AI.difficulty = 0;
 //Handle all the board data and formatting
 AI.getTableFormattedData = function(){
@@ -129,9 +129,8 @@ AI.tableData = AI.getTableFormattedData();
 //End of board grading stuff
 
 
-AI.AIMove = function(){
-  var deferred = $q.defer();
-  var move = this.calculateMove(this.difficulty)
+AI.AIMove = function(deferred){
+    var move = this.calculateMove(this.difficulty)
       if(!move){
         return;
       }
@@ -140,7 +139,7 @@ AI.AIMove = function(){
   this.tableData = this.getTableFormattedData();
   this.updateChains(move,this.colData[move].length-1,this.aChains,this.pChains, 1, this.colData);
     if(this.getBoardValue() == 1000){
-      this.gameOver = true;
+      this.gameOver = 1;
       deferred.reject("Game Over");
       return;
     }
@@ -148,19 +147,25 @@ AI.AIMove = function(){
   console.log(this.pChains);
   console.log(this.aChains);
   console.log(this.getBoardValue());
-  return deferred.promise;
 }
 //Event handler communication with factory
   AI.playerMove = function(x,y){
+    var that = this;
     if(this.colData[x].length < 8){
       this.colData[x].push(0);
       this.tableData = this.getTableFormattedData();
       this.updateChains(x,y,this.pChains,this.aChains, 0, this.colData);
         if(this.getBoardValue() == -1000){
-          this.gameOver = true;
+          this.gameOver = 0;
           return ;
         }
-      return this.AIMove();;
+      var deferred = $q.defer();
+      $timeout(function(){
+        that.AIMove(deferred);
+      },10);
+
+      return deferred.promise;
+
     }
     else{
       return true;
@@ -401,7 +406,7 @@ AI.AIMove = function(){
   };
 
   AI.resetGame = function(){
-    this.gameOver = false;
+    this.gameOver = 0;
     this.pChains = [];
     this.aChains = [];
     this.colData = [[],[],[],[],[],[],[],[]];
