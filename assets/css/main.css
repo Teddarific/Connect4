@@ -4,7 +4,7 @@ body {
 }
 
 .display{
-  position: absolute;
+  position: static;
   left: 54%;
   top: 10%;
 }
