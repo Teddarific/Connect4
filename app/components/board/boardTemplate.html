@@ -5,10 +5,15 @@
             ng-mouseover="board.hoveredCol = $index" ng-mouseleave="board.hoveredCol = -1"
             ng-class="$index == board.hoveredCol ? 'activeCol' : 'inactiveCol'">
 
-            <img src='assets/img/bluepiece.jpg' class='ghostpieceimg'
+            <img src='assets/img/newblackpiece.jpg' class='ghostpieceimg'
                  ng-show='board.isGhostPos($parent.$index,$index)'>
-            <img src='assets/img/bluepiece.jpg' class='bluepieceimg' ng-show='val==0'>
-            <img src='assets/img/redpiece.jpg' class='redpieceimg' ng-show='val==1'>
+            <img src='assets/img/newblackpiece.jpg' class='bluepieceimg' ng-show='val==0'>
+            <img src='assets/img/newredpiece.jpg' class='redpieceimg' ng-show='val==1'>
         </td>
     </tr>
 </table>
+<input type='button' ng-click='board.newGame()' value='New Game' id="newGameBut"></input>
+<input type='button' ng-click='board.diff(0)' ng-class="board.difficulty == 0 ? 'activeDiff butt0' : 'inactiveDiff butt0'" value='Beginner'></input>
+<input type='button' ng-click='board.diff(1)' ng-class="board.difficulty == 1 ? 'activeDiff butt1' : 'inactiveDiff butt1'" value='Easy'></input>
+<input type='button' ng-click='board.diff(2)' ng-class="board.difficulty == 2 ? 'activeDiff butt2' : 'inactiveDiff butt2'" value='Medium'></input>
+<input type='button' ng-click='board.diff(3)' ng-class="board.difficulty == 3 ? 'activeDiff butt3' : 'inactiveDiff butt3'" value='Hard'></input>
