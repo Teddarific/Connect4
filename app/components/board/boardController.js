@@ -1,4 +1,4 @@
-function boardCtrl(AIService){
+function boardCtrl(AIService, $q){
     this.tableData = AIService.tableData;
     this.colData = AIService.colData;
     this.playerTurn = true;
@@ -6,11 +6,25 @@ function boardCtrl(AIService){
     this.gameOver = AIService.gameOver;
     this.playerMove = function(col){
       if(this.playerTurn && !this.gameOver){
-        this.playerTurn = false;
-        this.playerTurn = AIService.playerMove(col,this.colData[col].length);
-        this.gameOver = AIService.gameOver;
-        this.tableData = AIService.tableData;
-        this.colData = AIService.colData;
+        var that = this;
+        that.playerTurn = false;
+        var AIpromise = AIService.playerMove(col,this.colData[col].length); //make this process Async, calculations get heavy
+          AIpromise.then(function(){
+            that.gameOver = AIService.gameOver;
+            that.tableData = AIService.tableData;
+            that.colData = AIService.colData;
+            that.playerTurn = true;
+          },function(message){
+            alert("Game over");
+          },function(status){
+            if(status == 0){
+              that.tableData = AIService.tableData;
+              that.colData = AIService.colData;
+            }
+          });
+        that.gameOver = AIService.gameOver;
+        that.tableData = AIService.tableData;
+        that.colData = AIService.colData;
       }
     }
     this.hoveredCol = -1;
