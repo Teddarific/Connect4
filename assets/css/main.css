@@ -1,12 +1,30 @@
 body {
-    background-image: url('assets/img/background.jpg');
     background-size: cover;
+    background-color: #989A9A;
+}
+
+.display{
+  position: static;
+  left: 54%;
+  top: 10%;
+}
+
+#board{
+  position: relative;
+}
+
+input {
+  position: absolute;
+  left: 60rem;
+  width: 5rem;
+  height: 2rem;
 }
 
 table, th, td {
+    position: relative;
     border: 1px solid black;
-    margin-left: 7.75rem;
-    margin-top: 5rem;
+    margin-left: 36.5%;
+    margin-top: 8%;
 }
 
 td {
@@ -15,6 +33,7 @@ td {
 }
 
 #newGameBut {
+  margin-top: -25rem;
   border: 2px solid purple;
   background-color: white;
   color: black;
@@ -65,6 +84,7 @@ td {
 
 
 .butt0{
+  margin-top: -22.5rem;
   border: 2px solid green;
 }
 .butt0.activeDiff{
@@ -74,6 +94,7 @@ td {
   background-color: green;
 }
 .butt1{
+  margin-top: -20rem;
   border: 2px solid blue;
 }
 .butt1.activeDiff{
@@ -83,6 +104,7 @@ td {
   background-color: blue;
 }
 .butt2{
+  margin-top: -17.5rem;
   border: 2px solid red;
 }
 .butt2.activeDiff{
@@ -92,6 +114,7 @@ td {
   background-color: red;
 }
 .butt3{
+  margin-top: -15.0rem;
   border: 2px solid black;
 }
 .butt3.activeDiff{
