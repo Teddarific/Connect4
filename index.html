@@ -15,16 +15,17 @@
     <body>
 
             <div ng-app='boardApp'  ng-controller='boardCtrl as board'>
-                <board-directive></board-directive>
-                <input type='button' ng-click='board.newGame()' value='New Game' id="newGameBut"></input>
-                <input type='button' ng-click='board.diff(0)' ng-class="board.difficulty == 0 ? 'activeDiff butt0' : 'inactiveDiff butt0'" value='Beginner'></input>
-                <input type='button' ng-click='board.diff(1)' ng-class="board.difficulty == 1 ? 'activeDiff butt1' : 'inactiveDiff butt1'" value='Easy'></input>
-                <input type='button' ng-click='board.diff(2)' ng-class="board.difficulty == 2 ? 'activeDiff butt2' : 'inactiveDiff butt2'" value='Medium'></input>
-                <input type='button' ng-click='board.diff(3)' ng-class="board.difficulty == 3 ? 'activeDiff butt3' : 'inactiveDiff butt3'" value='Hard'></input>
+                <board-directive id="board">
+                  <input type='button' ng-click='board.newGame()' value='New Game' id="newGameBut"></input>
+                  <input type='button' ng-click='board.diff(0)' ng-class="board.difficulty == 0 ? 'activeDiff butt0' : 'inactiveDiff butt0'" value='Beginner'></input>
+                  <input type='button' ng-click='board.diff(1)' ng-class="board.difficulty == 1 ? 'activeDiff butt1' : 'inactiveDiff butt1'" value='Easy'></input>
+                  <input type='button' ng-click='board.diff(2)' ng-class="board.difficulty == 2 ? 'activeDiff butt2' : 'inactiveDiff butt2'" value='Medium'></input>
+                  <input type='button' ng-click='board.diff(3)' ng-class="board.difficulty == 3 ? 'activeDiff butt3' : 'inactiveDiff butt3'" value='Hard'></input>
+                </board-directive>
 
-                <div ng-show='board.gameOver'>Game over!</div>
-                <div ng-show='board.playerTurn'>It's your turn!<div>
-                <div ng-show='!board.playerTurn'>Thinking...</div>
+                <div class='display' ng-show='board.gameOver'>Game over!</div>
+                <div class='display' ng-show='board.playerTurn'>It's your turn!<div>
+                <div class='display' ng-show='!board.playerTurn'>Thinking...</div>
             </div>
 
 
