@@ -5,10 +5,10 @@
             ng-mouseover="board.hoveredCol = $index" ng-mouseleave="board.hoveredCol = -1"
             ng-class="$index == board.hoveredCol ? 'activeCol' : 'inactiveCol'">
 
-            <img src='assets/img/bluepiece.jpg' class='ghostpieceimg'
+            <img src='assets/img/newBlackPiece.jpg' class='ghostpieceimg'
                  ng-show='board.isGhostPos($parent.$index,$index)'>
-            <img src='assets/img/bluepiece.jpg' class='bluepieceimg' ng-show='val==0'>
-            <img src='assets/img/redpiece.jpg' class='redpieceimg' ng-show='val==1'>
+            <img src='assets/img/newBlackPiece.jpg' class='bluepieceimg' ng-show='val==0'>
+            <img src='assets/img/newRedPiece.jpg' class='redpieceimg' ng-show='val==1'>
         </td>
     </tr>
 </table>
