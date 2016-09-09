@@ -1,3 +1,6 @@
+//NOT CURRENTLY USED
+//DEPRECATED
+
 var boardService = function(AIService){
     //Designed to communicate with AI service
     var service = {};

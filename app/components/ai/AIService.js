@@ -1,49 +1,49 @@
 var AIService = function($q,$timeout){
   var AI = {};
 //Define direction functions
-  var d0 = function(x,y){
+  var d0 = function(x,y){ //Up
     if(y+1 > 7){
       return undefined;
     }
     return [x,y+1];
   }
-  var d1 = function(x,y){
+  var d1 = function(x,y){ //Up right
     if(y+1 >7 || x+1 > 7){
       return undefined;
     }
     return [x+1,y+1];
   }
-  var d2 = function(x,y){
+  var d2 = function(x,y){ //Right
     if(x+1 > 7){
       return undefined;
     }
     return [x+1,y];
   }
-  var d3 = function(x,y){
+  var d3 = function(x,y){ //Down right
     if(y-1 < 0 || x+1 > 7){
       return undefined;
     }
     return [x+1,y-1];
   }
-  var d4 = function(x,y){
+  var d4 = function(x,y){ //Down
     if(y-1 < 0){
       return undefined;
     }
     return [x,y-1];
   }
-  var d5 = function(x,y){
+  var d5 = function(x,y){ //Down Left
     if(y-1 < 0 || x-1 < 0){
       return undefined;
     }
     return [x-1,y-1];
   }
-  var d6 = function(x,y){
+  var d6 = function(x,y){ //Left
     if(x-1 < 0){
       return undefined;
     }
     return [x-1,y]
   }
-  var d7 = function(x,y){
+  var d7 = function(x,y){ //Up Left
     if(x-1 < 0 || y+1 > 7){
       return undefined;
     }
@@ -128,7 +128,7 @@ AI.tableData = AI.getTableFormattedData();
   }
 //End of board grading stuff
 
-
+//Move AI
 AI.AIMove = function(deferred){
     var move = this.calculateMove(this.difficulty)
       if(!move){
@@ -240,6 +240,7 @@ AI.AIMove = function(deferred){
     return false;
   }
 
+  //Find a chain given a point and direction and a set of chains
   AI.findChain = function(nx,ny,dir,chains){
     var cDir = getComplementDir(dir);
     for(var i = 0; i < chains.length; i++){

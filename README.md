@@ -1,5 +1,6 @@
 # Connect4
 Connect4 app
+Built using AngularJS
 
 TODO (Loosely in order of priority)
 
